@@ -24,110 +24,116 @@ class Wall(cols: Int, rows: Int, exits: Vec2D[Boolean])
         }
         (x * 2 + dx, y + dy)
     }
-    /// Create a new labyrinth with all exits being closed.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// import labyrinth.Wall
-    ///
-    /// val labyrinth = new Wall(5, 2)
-    /// assert(5 == labyrinth.cols)
-    /// assert(2 == labyrinth.rows)
-    /// ```
+    /** Create a new labyrinth with all exits being closed.
+      *
+      * ==Examples==
+      * {{{
+      * import labyrinth.Wall
+      * val labyrinth = new Wall(5, 2)
+      * assert(5 == labyrinth.cols)
+      * assert(2 == labyrinth.rows)
+      * }}}
+      */
     def this(cols: Int, rows: Int) = this(
         cols,
         rows,
         Vec2D(cols * 2 + 1, rows + 1, false)
     )
 
-    /// Close all of the labyrinth exits bringing it to the initial state.
-    /// This is required to reuse the instance for another carving.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// import labyrinth.Wall;
-    ///
-    /// let mut labyrinth = Wall::new(10, 10);
-    /// labyrinth.carve();
-    /// labyrinth.close_all().carve();
-    /// ```
+    /** Close all of the labyrinth exits bringing it to the initial state.
+      * This is required to reuse the instance for another carving.
+      *
+      * ==Examples==
+      *
+      * {{{
+      * import labyrinth.Wall
+      *
+      * val labyrinth = Wall(10, 10)
+      * labyrinth.carve
+      * labyrinth.closeAll.carve
+      * }}}
+      */
     def closeAll() : Wall = {
         exits.fill(false);
         this
     }
-    /// Check existence of the specified exit.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use labyrinth::{Wall, Direction};
-    ///
-    /// let labyrinth = Wall::new(10, 10);
-    /// assert_eq!(false, labyrinth.is_open(0, 0, Direction::Right));
-    /// ```
+    /** Check existence of the specified exit.
+      *
+      * ==Examples==
+      *
+      * {{{
+      * import labyrinth.{Wall, Direction}
+      *
+      * val labyrinth = Wall(10, 10);
+      * assert(false == labyrinth.isOpen(0, 0, Direction.Right))
+      * }}}
+      */
     override def isOpen(x: Int, y: Int, dir: Direction) = {
         val (x0, y0) = exitAt(x, y, dir);
         exits.get(x0, y0)
     }
-    /// Set existence of the specified exit.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use labyrinth::{Wall, Direction};
-    ///
-    /// let mut labyrinth = Wall::new(10, 10);
-    /// assert_eq!(false, labyrinth.is_open(4, 5, Direction::Up));
-    /// labyrinth.set(4, 5, Direction::Up, true);
-    /// assert_eq!(true, labyrinth.is_open(4, 5, Direction::Up));
-    /// ```
+    /** Set existence of the specified exit.
+      *
+      * ==Examples==
+      *
+      * {{{
+      * import labyrinth.{Wall, Direction}
+      *
+      * val labyrinth = Wall(10, 10)
+      * assert(false == labyrinth.isOpen(4, 5, Direction.Up))
+      * labyrinth.set(4, 5, Direction.Up, true)
+      * assert(true == labyrinth.isOpen(4, 5, Direction.Up))
+      * }}}
+      */
     def set(x: Int, y: Int, dir: Direction, `val`: Boolean) : Wall = {
         val (x0, y0) = exitAt(x, y, dir);
         exits.set(x0, y0, `val`);
         this
     }
-    /// Open specified exit.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use labyrinth::{Wall, Direction};
-    ///
-    /// let mut labyrinth = Wall::new(10, 10);
-    /// labyrinth.open(2, 3, Direction::Down);
-    /// assert_eq!(true, labyrinth.is_open(2, 3, Direction::Down));
-    /// labyrinth.close(2, 3, Direction::Down);
-    /// assert_eq!(false, labyrinth.is_open(2, 3, Direction::Down));
-    /// ```
+    /** Open specified exit.
+      *
+      * ==Examples==
+      *
+      * {{{
+      * use labyrinth::{Wall, Direction}
+      *
+      * let mut labyrinth = Wall::new(10, 10)
+      * labyrinth.open(2, 3, Direction::Down)
+      * assert(true == labyrinth.isOpen(2, 3, Direction::Down))
+      * labyrinth.close(2, 3, Direction::Down)
+      * assert(false == labyrinth.isOpen(2, 3, Direction::Down))
+      * }}}
+      */
     override def open(x: Int, y: Int, dir: Direction) : Wall = {
         set(x, y, dir, true)
     }
-    /// Close specified exit.
+    /** Close specified exit. */
     override def close(x: Int, y: Int, dir: Direction) : Wall = {
         set(x, y, dir, false)
     }
-    /// Check if x and y coordinates are valid in a labyrinth.
-    /// # Examples
-    ///
-    /// ```
-    /// use labyrinth::Wall;
-    ///
-    /// let labyrinth = Wall::new(3, 2);
-    /// assert_eq!(true, labyrinth.in_bounds(2, 1));
-    /// assert_eq!(false, labyrinth.in_bounds(4, 5));
-    /// assert_eq!(false, labyrinth.in_bounds(-1, 0));
-    /// assert_eq!(false, labyrinth.in_bounds(-4, -5));
-    /// assert_eq!(false, labyrinth.in_bounds(1, -1));
-    /// ```
+    /** Check if x and y coordinates are valid in a labyrinth.
+      *
+      * ==Examples==
+      *
+      * {{{
+      * import labyrinth.Wall
+      *
+      * val labyrinth = Wall(3, 2)
+      * assert(true == labyrinth.inBounds(2, 1))
+      * assert(false == labyrinth.inBounds(4, 5))
+      * assert(false == labyrinth.inBounds(-1, 0))
+      * assert(false == labyrinth.inBounds(-4, -5))
+      * assert(false == labyrinth.inBounds(1, -1))
+      * }}}
+      */
     override def inBounds(x: Int, y: Int) : Boolean = {
         x >= 0 && y >= 0 && x < cols && y < rows
     }
 
-    /// Randomize coordinates.
-    ///
-    /// The `rnd(n: Int) -> Int` should return a random number between `0` and `n` excluding `n`.
+    /** Randomize coordinates.
+      *
+      * The `rnd(n: Int) -> Int` should return a random number between `0` and `n` excluding `n`.
+      */
     override def randomStart(rnd: (Int) => Int) = {
         (rnd(cols), rnd(rows))
     }

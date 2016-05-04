@@ -8,9 +8,10 @@ import labyrinth.direction.Direction._
 import labyrinth.direction.{Move => Mov}
 
 trait WallCarve extends WallBase {
-    /// Carve a fresh labyrinth using hunt and seek algorithm.
-    ///
-    /// The labyrinth must be in an initial state otherwise this method will never return.
+    /** Carve a fresh labyrinth using hunt and seek algorithm.
+      *
+      * The labyrinth must be in an initial state otherwise this method will never return.
+      */
     def carve() : Unit = {
         val rooms = Room(rows, cols)
         val rnd = (x: Int) => Random.nextInt(x)

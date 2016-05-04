@@ -2,8 +2,7 @@ package labyrinth.vector2d;
 
 import scala.collection.mutable.ArrayBuffer
 
-/** Create two-dimensional vector containing `rows` vectors of `cols` size each.
-**/
+/** Create two-dimensional vector containing `rows` vectors of `cols` size each. */
 class Vec2D[T](val numCols: Int, val numRows: Int, value: T) {
 
     private val rows = Array.tabulate(numRows)(_ => ArrayBuffer.fill(numCols)(value))

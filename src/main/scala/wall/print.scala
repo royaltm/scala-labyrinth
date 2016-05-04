@@ -5,20 +5,20 @@ import java.io.{PrintWriter, BufferedWriter, OutputStreamWriter}
 import labyrinth.direction.Direction._
 
 trait WallPrint extends WallBase {
-    /// Print a labyrinth to stdout using UNICODE BOX characters.
+    /** Print a labyrinth to stdout using UNICODE BOX characters. */
     def print() : Unit = {
         val out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out, "UTF-8")))
         def writer = (s: String) => out.print(s)
         draw(writer)
         out.flush
     }
-    /// Draw a labyrinth as a String using UNICODE BOX characters.
+    /** Draw a labyrinth as a String using UNICODE BOX characters. */
     override def toString() : String = {
         val buf = new StringBuilder
         draw((s: String) => buf ++= s)
         buf.toString
     }
-    /// Draw a labyrinth using UNICODE BOX characters to a `writer`.
+    /** Draw a labyrinth using UNICODE BOX characters to a `writer`. */
     def draw(writer: (String) => Unit) : Unit = {
         for (y <- 0 until rows) {
             for (x <- 0 until cols) {
