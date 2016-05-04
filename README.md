@@ -63,7 +63,6 @@ Put to `HelloLabyrinth.scala`:
 ```scala
 import labyrinth.{Wall, Direction}
 
-
 object HelloLabyrinth extends App {
     val wall = Wall(20, 20)
     wall.carve
