@@ -5,14 +5,14 @@ class Vec2DSpec extends FunSuite with Matchers {
 
     test("should create an empty vector") {
         val v2d = Vec2D(0, 0, 0)
-        v2d.num_cols shouldBe 0
-        v2d.num_rows shouldBe 0
+        v2d.numCols shouldBe 0
+        v2d.numRows shouldBe 0
     }
 
     test("should create vector with a value") {
         val v2d = Vec2D(3, 2, 'x')
-        v2d.num_cols shouldBe 3
-        v2d.num_rows shouldBe 2
+        v2d.numCols shouldBe 3
+        v2d.numRows shouldBe 2
         for(row <- 0 until 2) {
             for(col <- 0 until 3) {
                 v2d.get(col, row) shouldBe 'x'
@@ -25,8 +25,8 @@ class Vec2DSpec extends FunSuite with Matchers {
 
     test("should fill vector with a value") {
         val v2d = Vec2D(4, 8, '@')
-        v2d.num_cols shouldBe 4
-        v2d.num_rows shouldBe 8
+        v2d.numCols shouldBe 4
+        v2d.numRows shouldBe 8
         for(row <- 0 until 8) {
             for(col <- 0 until 4) {
                 v2d.get(col, row) shouldBe '@'

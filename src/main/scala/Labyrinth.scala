@@ -12,7 +12,6 @@ object Labyrinth extends App {
             arg match { case Some(_) => args.remove(0) case _ => {} }
             arg
         }
-
     }
 
     var bargs = args.to[ArrayBuffer]
